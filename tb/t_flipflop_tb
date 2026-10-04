@@ -1,1 +1,53 @@
+`timescale 1ns / 1ps
+
+module t_flipflop_tb;
+
+    reg clk;
+    reg rstn;
+    reg T;
+
+    wire Q;
+
+    t_flipflop dut(
+        .clk(clk),
+        .rstn(rstn),
+        .T(T),
+        .Q(Q)
+    );
+
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    initial begin
+
+        rstn = 0;
+        T = 0;
+
+        #12;
+        rstn = 1;
+
+        // Hold
+        T = 0;
+        #20;
+
+        // Toggle
+        T = 1;
+        #40;
+
+        // Hold
+        T = 0;
+        #20;
+
+        // Toggle again
+        T = 1;
+        #20;
+
+        $finish;
+
+    end
+
+endmodule
+
 
